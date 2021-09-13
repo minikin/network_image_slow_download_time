@@ -1,0 +1,14 @@
+name: network_image_slow_download_time
+description: This project demonstrates slow image download in Flutter apps with Image.network widget.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.13.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
