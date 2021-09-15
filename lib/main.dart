@@ -2,22 +2,38 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(const App());
 
-const _imageUri =
-    'https://images.unsplash.com/photo-1629109078819-da344f157ebc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80';
+String _imageUri(int i) {
+  final w = 1920 - i;
+  return 'https://images.unsplash.com/photo-1595278724653-ef410db08d76?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=$w&q=80';
+}
 
 final _messureResults = [];
-final items = List<ImageItem>.generate(400, (_) => ImageItem());
+final items = List<ImageItem>.generate(
+  100,
+  (i) => ImageItem(
+    imgPath: _imageUri(i),
+  ),
+);
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      MaterialApp(home: ListView(children: items));
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: GridView.count(
+        crossAxisCount: 10,
+        children: items,
+      ),
+    );
+  }
 }
+// MaterialApp(home: ListView(children: items));
 
 class ImageItem extends StatefulWidget {
-  ImageItem({Key? key}) : super(key: key);
+  final String imgPath;
+
+  ImageItem({required this.imgPath, Key? key}) : super(key: key);
 
   @override
   _ImageItemState createState() => _ImageItemState();
@@ -29,7 +45,7 @@ class _ImageItemState extends State<ImageItem> {
   Widget build(BuildContext context) {
     stopwatch.start();
     return Image.network(
-      _imageUri,
+      widget.imgPath,
       frameBuilder: (_, child, frame, __) {
         if (frame == 0) {
           _resetStopWatch();
